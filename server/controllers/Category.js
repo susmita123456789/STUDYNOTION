@@ -20,6 +20,7 @@ exports.createCategory = async (req, res) => {
 		return res.status(200).json({
 			success: true,
 			message: "Categorys Created Successfully",
+      category: CategorysDetails, // ✅ include the created category
 		});
 	} catch (error) {
 		return res.status(500).json({
@@ -28,6 +29,45 @@ exports.createCategory = async (req, res) => {
 		});
 	}
 };
+
+
+
+
+// exports.createCategory = async (req, res) => {
+//   try {
+//     const { name, description } = req.body;
+
+//     // validate name
+//     if (!name) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Category name is required",
+//       });
+//     }
+
+//     // create category in DB
+//     const categoryDetails = await Category.create({
+//       name,
+//       description,
+//     });
+
+//     console.log("Created category:", categoryDetails);
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Category created successfully",
+//       category: categoryDetails, // ✅ include the created category
+//     });
+//   } catch (error) {
+//     console.error("Error creating category:", error);
+//     return res.status(500).json({
+//       success: false, // ✅ should be false on error
+//       message: error.message,
+//     });
+//   }
+// };
+
+
 
 exports.showAllCategories = async (req, res) => {
 	try {
