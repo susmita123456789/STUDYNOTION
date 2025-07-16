@@ -31,8 +31,9 @@ app.use(cookieParser());
 
 
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://studynotion-4dre.vercel.app"
+  "http://localhost:3000", // local dev
+  "https://studynotion-4dre.vercel.app", // ✅ your deployed frontend domain (no trailing slash)
+  "https://studynotion-4dre-5kxv8njuz-susmita-singhs-projects.vercel.app" // ✅ also include if you're still using default vercel URL
 ];
 
 
