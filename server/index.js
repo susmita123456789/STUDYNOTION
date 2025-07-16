@@ -28,12 +28,33 @@ database.connect();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://studynotion-4dre.vercel.app"
+];
+
+
 app.use(
   cors({
-    origin: "http://localhost:3000", // allow frontend
-    credentials: true,               // allow cookies if needed
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // allow cookies and auth headers
   })
 );
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000", // allow frontend
+//     credentials: true,               // allow cookies if needed
+//   })
+// );
 app.use(
   fileUpload({
     useTempFiles: true,
