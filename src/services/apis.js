@@ -1,5 +1,6 @@
-const BASE_URL = process.env.REACT_APP_API_BASE_URL||"http://localhost:4000/api/v1"
+// const BASE_URL = process.env.REACT_APP_API_BASE_URL||"http://localhost:4000/api/v1"
 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL||"https://studynotion-0cem.onrender.com/api/v1"
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sendotp",
