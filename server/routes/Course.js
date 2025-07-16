@@ -1,6 +1,9 @@
 // Import the required modules
 const express = require("express")
 const router = express.Router()
+const multer = require("multer");
+const storage = multer.memoryStorage(); // or diskStorage
+const upload = multer({ storage: storage });
 
 // Import the Controllers
 
@@ -67,8 +70,17 @@ router.post("/deleteSection", auth, isInstructor, deleteSection)
 router.post("/updateSubSection", auth, isInstructor, updateSubSection)
 // Delete Sub Section
 router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
-// Add a Sub Section to a Section
-router.post("/addSubSection", auth, isInstructor, createSubSection)
+// // Add a Sub Section to a Section
+// router.post("/addSubSection", auth, isInstructor, createSubSection)
+
+
+router.post(
+  "/addSubSection",
+  auth,
+  isInstructor,
+  upload.single("video"), // <--- this parses req.file
+  createSubSection
+);
 // Get all Registered Courses
 router.get("/getAllCourses", getAllCourses)
 // Get Details for a Specific Courses

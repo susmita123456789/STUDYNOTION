@@ -104,23 +104,60 @@ export default function SubSectionModal({
       return
     }
 
-    const formData = new FormData()
-    formData.append("sectionId", modalData)
-    formData.append("title", data.lectureTitle)
-    formData.append("description", data.lectureDesc)
-    formData.append("video", data.lectureVideo)
-    setLoading(true)
-    const result = await createSubSection(formData, token)
-    if (result) {
-      // update the structure of course
-      const updatedCourseContent = course.courseContent.map((section) =>
-        section._id === modalData ? result : section
-      )
-      const updatedCourse = { ...course, courseContent: updatedCourseContent }
-      dispatch(setCourse(updatedCourse))
-    }
-    setModalData(null)
-    setLoading(false)
+    // const formData = new FormData()
+    // formData.append("sectionId", modalData)
+    // formData.append("title", data.lectureTitle)
+    // formData.append("description", data.lectureDesc)
+    // formData.append("video", data.lectureVideo[0])
+    // setLoading(true)
+    // const result = await createSubSection(formData, token)
+    // if (result) {
+    //   // update the structure of course
+    //   const updatedCourseContent = course.courseContent.map((section) =>
+    //     section._id === modalData ? result : section
+    //   )
+    //   const updatedCourse = { ...course, courseContent: updatedCourseContent }
+    //   dispatch(setCourse(updatedCourse))
+    // }
+     
+//     const result = await createSubSection(formData, token)
+// if (result?.data) {
+//   const updatedSection = result.data
+//   const updatedCourseContent = course.courseContent.map((section) =>
+//     section._id === modalData ? updatedSection : section
+//   )
+//   const updatedCourse = { ...course, courseContent: updatedCourseContent }
+//   dispatch(setCourse(updatedCourse))
+// }
+
+
+//     setModalData(null)
+//     setLoading(false)
+//   }
+const formData = new FormData();
+formData.append("sectionId", modalData);
+formData.append("title", data.lectureTitle);
+formData.append("description", data.lectureDesc);
+formData.append("video", data.lectureVideo[0]); // ✅ MUST use the first file
+
+setLoading(true);
+
+try {
+  const result = await createSubSection(formData, token);
+  if (result?.data) {
+    const updatedSection = result.data;
+    const updatedCourseContent = course.courseContent.map((section) =>
+      section._id === modalData ? updatedSection : section
+    );
+    const updatedCourse = { ...course, courseContent: updatedCourseContent };
+    dispatch(setCourse(updatedCourse));
+  }
+} catch (error) {
+  console.error("Error creating subsection:", error);
+} finally {
+  setModalData(null);
+  setLoading(false);
+}
   }
 
   return (
