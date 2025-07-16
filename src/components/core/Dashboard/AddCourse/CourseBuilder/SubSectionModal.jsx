@@ -138,7 +138,7 @@ const formData = new FormData();
 formData.append("sectionId", modalData);
 formData.append("title", data.lectureTitle);
 formData.append("description", data.lectureDesc);
-formData.append("video", data.lectureVideo[0]); // ✅ MUST use the first file
+formData.append("video", data.lectureVideo); // ✅ MUST use the first file
 
 setLoading(true);
 
