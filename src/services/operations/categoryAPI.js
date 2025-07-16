@@ -31,15 +31,16 @@
 
 
 import { apiConnector } from "../apiconnector";
-import { endpoints } from "../apis"; // ✅ because apis.js is directly inside services
+// import { endpoints } from "../apis"; // ✅ because apis.js is directly inside services
 
-const { CREATE_CATEGORY_API } = endpoints;
+// const { CREATE_CATEGORY_API } = endpoints;
 
 export const createCategory = async (categoryData, token) => {
   try {
     const response = await apiConnector(
       "POST",
-      CREATE_CATEGORY_API,
+      // CREATE_CATEGORY_API,
+      "https://studynotion-0cem.onrender.com/api/v1/course/createCategory",
       categoryData,
       {
         Authorization: `Bearer ${token}`,

@@ -24,17 +24,31 @@ async function sendVerificationEmail(email, otp) {
 	// Define the email options
 
 	// Send the email
+	// try {
+	// 	const mailResponse = await mailSender(
+	// 		email,
+	// 		"Verification Email",
+	// 		emailTemplate(otp)
+	// 	);
+	// 	console.log("Email sent successfully: ", mailResponse.response);
+	// } catch (error) {
+	// 	console.log("Error occurred while sending email: ", error);
+	// 	throw error;
+	// }
+
+
 	try {
-		const mailResponse = await mailSender(
-			email,
-			"Verification Email",
-			emailTemplate(otp)
-		);
-		console.log("Email sent successfully: ", mailResponse.response);
-	} catch (error) {
-		console.log("Error occurred while sending email: ", error);
-		throw error;
-	}
+  const mailResponse = await mailSender(
+    email,
+    "Verification Email",
+    emailTemplate(otp)
+  );
+  console.log("Email sent successfully: ", mailResponse?.response || mailResponse);
+} catch (error) {
+  console.log("Error occurred while sending email: ", error);
+  throw error;
+}
+
 }
 
 // Define a post-save hook to send email after the document has been saved
