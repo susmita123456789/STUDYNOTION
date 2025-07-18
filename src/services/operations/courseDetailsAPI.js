@@ -46,7 +46,7 @@ export const fetchCourseDetails = async (courseId) => {
   //   dispatch(setLoading(true));
   let result = null
   try {
-    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/fetchCourseDetails", {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/getFullCourseDetails", {
       courseId,
     })
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
@@ -312,7 +312,7 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
   try {
     const response = await apiConnector(
       "POST",
-      "https://studynotion-0cem.onrender.com/api/v1/course/getFullDetailsOfCourse",
+      "https://studynotion-0cem.onrender.com/api/v1/course/getFullCourseDetails",
       {
         courseId,
       },
@@ -342,7 +342,7 @@ export const markLectureAsComplete = async (data, token) => {
   console.log("mark complete data", data)
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/markLectureAsComplete", data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/updateCourseProgress", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log(

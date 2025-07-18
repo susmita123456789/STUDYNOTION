@@ -18,7 +18,7 @@ export function updateDisplayPicture(token, formData) {
     try {
       const response = await apiConnector(
         "PUT",
-        "https://studynotion-0cem.onrender.com/api/v1/profile/updatedisplayPicture",
+        "https://studynotion-0cem.onrender.com/api/v1/profile/updateDisplayPicture",
         formData,
         {
           "Content-Type": "multipart/form-data",
@@ -73,7 +73,7 @@ export function updateProfile(token, formData) {
 export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/changePassword", formData, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/changepassword", formData, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CHANGE_PASSWORD_API API RESPONSE............", response)
