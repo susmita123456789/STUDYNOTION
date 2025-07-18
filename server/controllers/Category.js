@@ -4,30 +4,64 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max)
   }
 
+// exports.createCategory = async (req, res) => {
+// 	try {
+// 		const { name, description } = req.body;
+// 		if (!name) {
+// 			return res
+// 				.status(400)
+// 				.json({ success: false, message: "All fields are required" });
+// 		}
+// 		const CategorysDetails = await Category.create({
+// 			name: name,
+// 			description: description,
+// 		});
+// 		console.log(CategorysDetails);
+// 		return res.status(200).json({
+// 			success: true,
+// 			message: "Categorys Created Successfully",
+//       category: CategorysDetails, // ✅ include the created category
+// 		});
+// 	} catch (error) {
+// 		return res.status(500).json({
+// 			success: true,
+// 			message: error.message,
+// 		});
+// 	}
+// };
+
+
+
+
 exports.createCategory = async (req, res) => {
-	try {
-		const { name, description } = req.body;
-		if (!name) {
-			return res
-				.status(400)
-				.json({ success: false, message: "All fields are required" });
-		}
-		const CategorysDetails = await Category.create({
-			name: name,
-			description: description,
-		});
-		console.log(CategorysDetails);
-		return res.status(200).json({
-			success: true,
-			message: "Categorys Created Successfully",
-      category: CategorysDetails, // ✅ include the created category
-		});
-	} catch (error) {
-		return res.status(500).json({
-			success: true,
-			message: error.message,
-		});
-	}
+  try {
+    const { name, description } = req.body;
+
+    // Validate input
+    if (!name || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    // Create category
+    const categoryDetails = await Category.create({ name, description });
+    console.log("✅ Created Category:", categoryDetails);
+
+    // Respond with created category
+    return res.status(200).json({
+      success: true,
+      message: "Category Created Successfully",
+      category: categoryDetails,
+    });
+  } catch (error) {
+    console.error("Error creating category:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 

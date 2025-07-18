@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
@@ -27,10 +29,6 @@ export default function SubSectionModal({
     getValues,
   } = useForm()
 
-  // console.log("view", view)
-  // console.log("edit", edit)
-  // console.log("add", add)
-
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const { token } = useSelector((state) => state.auth)
@@ -38,17 +36,14 @@ export default function SubSectionModal({
 
   useEffect(() => {
     if (view || edit) {
-      // console.log("modalData", modalData)
       setValue("lectureTitle", modalData.title)
       setValue("lectureDesc", modalData.description)
       setValue("lectureVideo", modalData.videoUrl)
     }
-  }, [])
+  }, [view, edit, modalData.title, modalData.description, modalData.videoUrl, setValue])
 
-  // detect whether form is updated or not
   const isFormUpdated = () => {
     const currentValues = getValues()
-    // console.log("changes after editing form values:", currentValues)
     if (
       currentValues.lectureTitle !== modalData.title ||
       currentValues.lectureDesc !== modalData.description ||
@@ -59,106 +54,159 @@ export default function SubSectionModal({
     return false
   }
 
-  // handle the editing of subsection
+
+
+
+
+
+
+  // // handle the editing of subsection
+  // const handleEditSubsection = async () => {
+  //   const currentValues = getValues()
+  //   // console.log("changes after editing form values:", currentValues)
+  //   const formData = new FormData()
+  //   // console.log("Values After Editing form values:", currentValues)
+  //   formData.append("sectionId", modalData.sectionId)
+  //   formData.append("subSectionId", modalData._id)
+  //   if (currentValues.lectureTitle !== modalData.title) {
+  //     formData.append("title", currentValues.lectureTitle)
+  //   }
+  //   if (currentValues.lectureDesc !== modalData.description) {
+  //     formData.append("description", currentValues.lectureDesc)
+  //   }
+  //   if (currentValues.lectureVideo !== modalData.videoUrl) {
+  //     formData.append("video", currentValues.lectureVideo)
+  //   }
+  //   setLoading(true)
+  //   const result = await updateSubSection(formData, token)
+  //   if (result) {
+  //     // console.log("result", result)
+  //     // update the structure of course
+  //     const updatedCourseContent = course.courseContent.map((section) =>
+  //       section._id === modalData.sectionId ? result : section
+  //     )
+  //     const updatedCourse = { ...course, courseContent: updatedCourseContent }
+  //     dispatch(setCourse(updatedCourse))
+  //   }
+  //   setModalData(null)
+  //   setLoading(false)
+  // }    ///correct oneeee
+
+
+
   const handleEditSubsection = async () => {
-    const currentValues = getValues()
-    // console.log("changes after editing form values:", currentValues)
-    const formData = new FormData()
-    // console.log("Values After Editing form values:", currentValues)
-    formData.append("sectionId", modalData.sectionId)
-    formData.append("subSectionId", modalData._id)
-    if (currentValues.lectureTitle !== modalData.title) {
-      formData.append("title", currentValues.lectureTitle)
-    }
-    if (currentValues.lectureDesc !== modalData.description) {
-      formData.append("description", currentValues.lectureDesc)
-    }
-    if (currentValues.lectureVideo !== modalData.videoUrl) {
-      formData.append("video", currentValues.lectureVideo)
-    }
-    setLoading(true)
-    const result = await updateSubSection(formData, token)
-    if (result) {
-      // console.log("result", result)
-      // update the structure of course
+  const currentValues = getValues();
+
+  // ✅ Only send changed fields, no file upload
+  const formData = {
+    sectionId: modalData.sectionId,
+    subSectionId: modalData._id,
+    title: currentValues.lectureTitle,
+    description: currentValues.lectureDesc,
+    videoUrl: modalData.videoUrl || "https://example.com/dummy-video.mp4"
+  };
+
+  toast.loading("Updating subsection…");
+
+  setLoading(true);
+  try {
+    const result = await updateSubSection(formData, token);
+    if (result?.data) {
+      const updatedSection = result.data;
       const updatedCourseContent = course.courseContent.map((section) =>
-        section._id === modalData.sectionId ? result : section
-      )
-      const updatedCourse = { ...course, courseContent: updatedCourseContent }
-      dispatch(setCourse(updatedCourse))
+        section._id === modalData.sectionId ? updatedSection : section
+      );
+      const updatedCourse = { ...course, courseContent: updatedCourseContent };
+      dispatch(setCourse(updatedCourse));
+      toast.success("Subsection updated successfully");
     }
-    setModalData(null)
-    setLoading(false)
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to update subsection");
+  } finally {
+    setModalData(null);
+    setLoading(false);
   }
+};
 
-  const onSubmit = async (data) => {
-    // console.log(data)
-    if (view) return
 
-    if (edit) {
-      if (!isFormUpdated()) {
-        toast.error("No changes made to the form")
-      } else {
-        handleEditSubsection()
-      }
-      return
-    }
 
-    // const formData = new FormData()
-    // formData.append("sectionId", modalData)
-    // formData.append("title", data.lectureTitle)
-    // formData.append("description", data.lectureDesc)
-    // formData.append("video", data.lectureVideo[0])
-    // setLoading(true)
-    // const result = await createSubSection(formData, token)
-    // if (result) {
-    //   // update the structure of course
-    //   const updatedCourseContent = course.courseContent.map((section) =>
-    //     section._id === modalData ? result : section
-    //   )
-    //   const updatedCourse = { ...course, courseContent: updatedCourseContent }
-    //   dispatch(setCourse(updatedCourse))
-    // }
+
+
+
+
+
+
+
+
+
+
+//    const result = await createSubSection(formData, token)
+//     if (result) {
+//       // update the structure of course
+//       const updatedCourseContent = course.courseContent.map((section) =>
+//         section._id === modalData ? result : section
+//       )
      
-//     const result = await createSubSection(formData, token)
-// if (result?.data) {
-//   const updatedSection = result.data
-//   const updatedCourseContent = course.courseContent.map((section) =>
-//     section._id === modalData ? updatedSection : section
-//   )
-//   const updatedCourse = { ...course, courseContent: updatedCourseContent }
-//   dispatch(setCourse(updatedCourse))
-// }
-
-
+//     console.log("👉 updatedCourseContent", updatedCourseContent);
+//       const updatedCourse = { ...course, courseContent: updatedCourseContent }
+//       dispatch(setCourse(updatedCourse))
+//       toast.success("Subsection created successfully");
+//     }
 //     setModalData(null)
-//     setLoading(false)
-//   }
-const formData = new FormData();
-formData.append("sectionId", modalData);
-formData.append("title", data.lectureTitle);
-formData.append("description", data.lectureDesc);
-formData.append("video", data.lectureVideo); // ✅ MUST use the first file
+//     setLoading(false)    //correct onneneee
 
-setLoading(true);
 
-try {
-  const result = await createSubSection(formData, token);
-  if (result?.data) {
-    const updatedSection = result.data;
-    const updatedCourseContent = course.courseContent.map((section) =>
-      section._id === modalData ? updatedSection : section
-    );
-    const updatedCourse = { ...course, courseContent: updatedCourseContent };
-    dispatch(setCourse(updatedCourse));
+
+
+
+
+
+
+
+
+
+const onSubmit = async (data) => {
+  if (view) return;
+
+  if (edit) {
+    if (!isFormUpdated()) {
+      toast.error("No changes made to the form");
+    } else {
+      await handleEditSubsection();
+    }
+    return;
   }
-} catch (error) {
-  console.error("Error creating subsection:", error);
-} finally {
-  setModalData(null);
-  setLoading(false);
-}
+
+  // ✅ Instead of file upload, just send text fields
+  const formData = {
+    sectionId: modalData, // or modalData.sectionId if you stored object
+    title: data.lectureTitle,
+    description: data.lectureDesc,
+    videoUrl: "https://example.com/dummy-video.mp4",
+  };
+
+  setLoading(true);
+
+  try {
+    const result = await createSubSection(formData, token);
+    if (result) {
+      const updatedCourseContent = course.courseContent.map((section) =>
+        section._id === modalData ? result : section
+      );
+      const updatedCourse = { ...course, courseContent: updatedCourseContent };
+      dispatch(setCourse(updatedCourse));
+    }
+  } catch (err) {
+    console.error("Error creating subsection:", err);
+    toast.error("Failed to create subsection");
+  } finally {
+    setModalData(null);
+    setLoading(false);
   }
+};
+
+
 
   return (
     <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
@@ -173,10 +221,7 @@ try {
           </button>
         </div>
         {/* Modal Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-8 px-8 py-10"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 px-8 py-10">
           {/* Lecture Video Upload */}
           <Upload
             name="lectureVideo"
@@ -209,8 +254,7 @@ try {
           {/* Lecture Description */}
           <div className="flex flex-col space-y-2">
             <label className="text-sm text-richblack-5" htmlFor="lectureDesc">
-              Lecture Description{" "}
-              {!view && <sup className="text-pink-200">*</sup>}
+              Lecture Description {!view && <sup className="text-pink-200">*</sup>}
             </label>
             <textarea
               disabled={view || loading}
@@ -236,5 +280,17 @@ try {
         </form>
       </div>
     </div>
-  )
+  );
 }
+
+
+
+
+
+
+
+
+
+
+
+

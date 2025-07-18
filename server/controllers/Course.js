@@ -8,6 +8,9 @@ const CourseProgress = require("../models/CourseProgress")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
 // Function to create a new course
 exports.createCourse = async (req, res) => {
+
+   console.log("📌 req.files:", req.files);
+    console.log("📌 req.body:", req.body);
   try {
     // Get user ID from request object
     const userId = req.user.id
@@ -24,7 +27,27 @@ exports.createCourse = async (req, res) => {
       instructions: _instructions,
     } = req.body
     // Get thumbnail image from request files
-    const thumbnail = req.files.thumbnailImage
+    // const thumbnail = req.files.thumbnailImage
+    // console.log(thumbnail);
+
+    // ✅ Convert price to a number
+price = Number(price);
+if (isNaN(price)) {
+  return res.status(400).json({
+    success: false,
+    message: "Price must be a valid number",
+  });
+}
+
+const thumbnail = req.files.thumbnailImage;
+    // ✅ Safe check before accessing thumbnail
+if (!req.files || !thumbnail) {
+  return res.status(400).json({
+    success: false,
+    message: "Thumbnail image is required",
+  });
+}
+console.log(thumbnail);
 
     // Convert the tag and instructions from stringified Array to Array
     const tag = JSON.parse(_tag)
@@ -72,11 +95,18 @@ exports.createCourse = async (req, res) => {
         message: "Category Details Not Found",
       })
     }
-    // Upload the Thumbnail to Cloudinary
-    const thumbnailImage = await uploadImageToCloudinary(
-      thumbnail,
-      process.env.FOLDER_NAME
-    )
+    // // Upload the Thumbnail to Cloudinary
+    // const thumbnailImage = await uploadImageToCloudinary(
+    //   thumbnail,
+    //   process.env.FOLDER_NAME
+    // )
+
+
+    // ✅ Upload the Thumbnail to Cloudinary using its tempFilePath
+const thumbnailImage = await uploadImageToCloudinary(
+  thumbnail.tempFilePath,   // 👈 important fix here
+  process.env.FOLDER_NAME
+)
     console.log(thumbnailImage)
     // Create a new course with the given details
     const newCourse = await Course.create({

@@ -29,6 +29,7 @@ import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import CreateCategoryForm from "./components/core/Dashboard/Category/CreateCategoryForm";
+import CategoryList from "./components/core/Dashboard/Category/CategoryList";
 
 
 function App() {
@@ -111,6 +112,8 @@ function App() {
       <Route path="dashboard/my-profile" element={<MyProfile />} />
       
       <Route path="dashboard/Settings" element={<Settings />} />
+
+      <Route path="/dashboard/categories" element={<CategoryList />} />
       
 
       {

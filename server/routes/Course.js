@@ -27,6 +27,9 @@ const {
 } = require("../controllers/Category")
 
 // Sections Controllers Import
+
+
+
 const {
   createSection,
   updateSection,
@@ -39,6 +42,9 @@ const {
   updateSubSection,
   deleteSubSection,
 } = require("../controllers/Subsection")
+
+
+console.log("Loaded controllers:", { createSubSection, updateSubSection, deleteSubSection });
 
 // Rating Controllers Import
 const {

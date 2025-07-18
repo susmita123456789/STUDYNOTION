@@ -78,82 +78,181 @@ export default function CourseInformationForm() {
     return false
   }
 
-  //   handle next button click
-  const onSubmit = async (data) => {
-    // console.log(data)
+//   //   handle next button click
+//   const onSubmit = async (data) => {
+//     // console.log(data)
 
-    if (editCourse) {
-      // const currentValues = getValues()
-      // console.log("changes after editing form values:", currentValues)
-      // console.log("now course:", course)
-      // console.log("Has Form Changed:", isFormUpdated())
-      if (isFormUpdated()) {
-        const currentValues = getValues()
-        const formData = new FormData()
-        // console.log(data)
-        formData.append("courseId", course._id)
-        if (currentValues.courseTitle !== course.courseName) {
-          formData.append("courseName", data.courseTitle)
-        }
-        if (currentValues.courseShortDesc !== course.courseDescription) {
-          formData.append("courseDescription", data.courseShortDesc)
-        }
-        if (currentValues.coursePrice !== course.price) {
-          formData.append("price", data.coursePrice)
-        }
-        if (currentValues.courseTags.toString() !== course.tag.toString()) {
-          formData.append("tag", JSON.stringify(data.courseTags))
-        }
-        if (currentValues.courseBenefits !== course.whatYouWillLearn) {
-          formData.append("whatYouWillLearn", data.courseBenefits)
-        }
-        if (currentValues.courseCategory._id !== course.category._id) {
-          formData.append("category", data.courseCategory)
-        }
-        if (
-          currentValues.courseRequirements.toString() !==
-          course.instructions.toString()
-        ) {
-          formData.append(
-            "instructions",
-            JSON.stringify(data.courseRequirements)
-          )
-        }
-        if (currentValues.courseImage !== course.thumbnail) {
-          formData.append("thumbnailImage", data.courseImage)
-        }
-        // console.log("Edit Form data: ", formData)
-        setLoading(true)
-        const result = await editCourseDetails(formData, token)
-        setLoading(false)
-        if (result) {
-          dispatch(setStep(2))
-          dispatch(setCourse(result))
-        }
-      } else {
-        toast.error("No changes made to the form")
-      }
-      return
-    }
+//     if (editCourse) {
+//       // const currentValues = getValues()
+//       // console.log("changes after editing form values:", currentValues)
+//       // console.log("now course:", course)
+//       // console.log("Has Form Changed:", isFormUpdated())
+//       if (isFormUpdated()) {
+//         const currentValues = getValues()
+//         const formData = new FormData()
+//         // console.log(data)
+//         formData.append("courseId", course._id)
+//         if (currentValues.courseTitle !== course.courseName) {
+//           formData.append("courseName", data.courseTitle)
+//         }
+//         if (currentValues.courseShortDesc !== course.courseDescription) {
+//           formData.append("courseDescription", data.courseShortDesc)
+//         }
+//         if (currentValues.coursePrice !== course.price) {
+//           formData.append("price", data.coursePrice)
+//         }
+//         if (currentValues.courseTags.toString() !== course.tag.toString()) {
+//           formData.append("tag", JSON.stringify(data.courseTags))
+//         }
+//         if (currentValues.courseBenefits !== course.whatYouWillLearn) {
+//           formData.append("whatYouWillLearn", data.courseBenefits)
+//         }
+//         if (currentValues.courseCategory._id !== course.category._id) {
+//           formData.append("category", data.courseCategory)
+//         }
+//         if (
+//           currentValues.courseRequirements.toString() !==
+//           course.instructions.toString()
+//         ) {
+//           formData.append(
+//             "instructions",
+//             JSON.stringify(data.courseRequirements)
+//           )
+//         }
+//         if (currentValues.courseImage !== course.thumbnail) {
+//           formData.append("thumbnailImage", data.courseImage)
+//         }
+//         // console.log("Edit Form data: ", formData)
+//         setLoading(true)
+//         const result = await editCourseDetails(formData, token)
+//         setLoading(false)
+//         if (result) {
+//           dispatch(setStep(2))
+//           dispatch(setCourse(result))
+//         }
+//       } else {
+//         toast.error("No changes made to the form")
+//       }
+//       return
+//     }
 
-    const formData = new FormData()
-    formData.append("courseName", data.courseTitle)
-    formData.append("courseDescription", data.courseShortDesc)
-    formData.append("price", data.coursePrice)
-    formData.append("tag", JSON.stringify(data.courseTags))
-    formData.append("whatYouWillLearn", data.courseBenefits)
-    formData.append("category", data.courseCategory)
-    formData.append("status", COURSE_STATUS.DRAFT)
-    formData.append("instructions", JSON.stringify(data.courseRequirements))
-    formData.append("thumbnailImage", data.courseImage)
-    setLoading(true)
-    const result = await addCourseDetails(formData, token)
-    if (result) {
-      dispatch(setStep(2))
-      dispatch(setCourse(result))
-    }
-    setLoading(false)
+//     const formData = new FormData()
+//     formData.append("courseName", data.courseTitle)
+//     formData.append("courseDescription", data.courseShortDesc)
+//     formData.append("price", data.coursePrice)
+//     console.log("Price",data.coursePrice);
+
+//     // If it's empty or invalid, handle it
+// if (data.coursePrice === "" || data.coursePrice === undefined) {
+//   alert("Please enter a valid price");
+//   return;
+// }
+// formData.append("price", data.coursePrice);
+//     formData.append("tag", JSON.stringify(data.courseTags))
+//     formData.append("whatYouWillLearn", data.courseBenefits)
+//     formData.append("category", data.courseCategory)
+//     formData.append("status", COURSE_STATUS.DRAFT)
+//     formData.append("instructions", JSON.stringify(data.courseRequirements))
+//     formData.append("thumbnailImage", data.courseImage[0])
+//     console.log("thubnail",data.courseImage[0])
+//     setLoading(true)
+//     const result = await addCourseDetails(formData, token)
+//     if (result) {
+//       dispatch(setStep(2))
+//       dispatch(setCourse(result))
+//     }
+//     setLoading(false)
+//   }
+
+
+
+// ✅ handle next button click
+const onSubmit = async (data) => {
+  // ✅ convert and validate price
+  const priceNumber = Number(data.coursePrice);
+  if (isNaN(priceNumber) || priceNumber < 0) {
+    toast.error("Please enter a valid price");
+    return;
   }
+
+  if (editCourse) {
+    // 🔹 EDIT MODE
+    if (isFormUpdated()) {
+      const currentValues = getValues();
+      const formData = new FormData();
+      formData.append("courseId", course._id);
+
+      if (currentValues.courseTitle !== course.courseName) {
+        formData.append("courseName", data.courseTitle);
+      }
+      if (currentValues.courseShortDesc !== course.courseDescription) {
+        formData.append("courseDescription", data.courseShortDesc);
+      }
+      if (currentValues.coursePrice !== course.price) {
+        formData.append("price", priceNumber); // ✅ send number
+      }
+      if (currentValues.courseTags.toString() !== course.tag.toString()) {
+        formData.append("tag", JSON.stringify(data.courseTags));
+      }
+      if (currentValues.courseBenefits !== course.whatYouWillLearn) {
+        formData.append("whatYouWillLearn", data.courseBenefits);
+      }
+      if (currentValues.courseCategory._id !== course.category._id) {
+        formData.append("category", data.courseCategory);
+      }
+      if (
+        currentValues.courseRequirements.toString() !==
+        course.instructions.toString()
+      ) {
+        formData.append(
+          "instructions",
+          JSON.stringify(data.courseRequirements)
+        );
+      }
+      if (currentValues.courseImage !== course.thumbnail) {
+        formData.append("thumbnailImage", data.courseImage[0]);
+      }
+
+      setLoading(true);
+      const result = await editCourseDetails(formData, token);
+      setLoading(false);
+      if (result) {
+        dispatch(setStep(2));
+        dispatch(setCourse(result));
+      }
+    } else {
+      toast.error("No changes made to the form");
+    }
+    return;
+  }
+
+  // 🔹 CREATE MODE
+  const formData = new FormData();
+  formData.append("courseName", data.courseTitle);
+  formData.append("courseDescription", data.courseShortDesc);
+  formData.append("price", priceNumber); // ✅ send number
+  formData.append("tag", JSON.stringify(data.courseTags));
+  formData.append("whatYouWillLearn", data.courseBenefits);
+  formData.append("category", data.courseCategory);
+  formData.append("status", COURSE_STATUS.DRAFT);
+  formData.append("instructions", JSON.stringify(data.courseRequirements));
+  formData.append("thumbnailImage", data.courseImage[0]);
+
+  console.log("✅ Price being sent:", priceNumber);
+  console.log("✅ Thumbnail being sent:", data.courseImage[0]);
+
+  setLoading(true);
+  const result = await addCourseDetails(formData, token);
+  if (result) {
+    dispatch(setStep(2));
+    dispatch(setCourse(result));
+  }
+  setLoading(false);
+};
+
+
+
+
 
   return (
     <form
@@ -200,18 +299,23 @@ export default function CourseInformationForm() {
           Course Price <sup className="text-pink-200">*</sup>
         </label>
         <div className="relative">
-          <input
-            id="coursePrice"
-            placeholder="Enter Course Price"
-            {...register("coursePrice", {
-              required: true,
-              valueAsNumber: true,
-              pattern: {
-                value: /^(0|[1-9]\d*)(\.\d+)?$/,
-              },
-            })}
-            className="form-style w-full !pl-12"
-          />
+        
+
+
+<input
+  type="number"
+  step="0.01"
+  id="coursePrice"
+  placeholder="Enter Course Price"
+  {...register("coursePrice", {
+    required: true,
+    valueAsNumber: true,
+  })}
+  className="form-style w-full !pl-12"
+/>
+
+
+
           <HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
         </div>
         {errors.coursePrice && (

@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast"
 
-import { updateCompletedLectures } from "../../slices/viewCourseSlice"
+// import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from "../apis"
@@ -9,10 +9,10 @@ const {
   COURSE_DETAILS_API,
   COURSE_CATEGORIES_API,
   GET_ALL_COURSE_API,
-  CREATE_COURSE_API,
+  // CREATE_COURSE_API,
   EDIT_COURSE_API,
   CREATE_SECTION_API,
-  CREATE_SUBSECTION_API,
+  // CREATE_SUBSECTION_API,
   UPDATE_SECTION_API,
   UPDATE_SUBSECTION_API,
   DELETE_SECTION_API,
@@ -87,7 +87,7 @@ export const addCourseDetails = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", CREATE_COURSE_API, data, {
+    const response = await apiConnector("POST", "http://localhost:4000/api/v1/course/createCourse", data, {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     })
@@ -155,7 +155,7 @@ export const createSubSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, {
+    const response = await apiConnector("POST", "http://localhost:4000/api/v1/course/addSubSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CREATE SUB-SECTION API RESPONSE............", response)
