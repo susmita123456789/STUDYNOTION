@@ -133,7 +133,7 @@ export const createSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/createSection", data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/addSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CREATE SECTION API RESPONSE............", response)
