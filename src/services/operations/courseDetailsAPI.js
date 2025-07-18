@@ -46,7 +46,7 @@ export const fetchCourseDetails = async (courseId) => {
   //   dispatch(setLoading(true));
   let result = null
   try {
-    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/getFullCourseDetails", {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/getCourseDetails", {
       courseId,
     })
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
