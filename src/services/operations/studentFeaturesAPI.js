@@ -166,7 +166,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
         }
 
         //initiate the order
-        const orderResponse = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/capturePayment", 
+        const orderResponse = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/payment/capturePayment", 
                                 {courses},
                                 {
                                     Authorization: `Bearer ${token}`,
