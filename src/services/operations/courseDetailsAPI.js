@@ -7,8 +7,8 @@ import { courseEndpoints } from "../apis"
 
 const {
   COURSE_DETAILS_API,
-  COURSE_CATEGORIES_API,
-  GET_ALL_COURSE_API,
+  // COURSE_CATEGORIES_API,
+  // GET_ALL_COURSE_API,
   // CREATE_COURSE_API,
   EDIT_COURSE_API,
   CREATE_SECTION_API,
@@ -28,7 +28,7 @@ export const getAllCourses = async () => {
   const toastId = toast.loading("Loading...")
   let result = []
   try {
-    const response = await apiConnector("GET", GET_ALL_COURSE_API)
+    const response = await apiConnector("GET", "https://studynotion-0cem.onrender.com/api/v1/course/getAllCourses")
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories")
     }
@@ -69,7 +69,7 @@ export const fetchCourseDetails = async (courseId) => {
 export const fetchCourseCategories = async () => {
   let result = []
   try {
-    const response = await apiConnector("GET", COURSE_CATEGORIES_API)
+    const response = await apiConnector("GET", "https://studynotion-0cem.onrender.com/api/v1/course/showAllCategories")
     console.log("COURSE_CATEGORIES_API API RESPONSE............", response)
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories")
@@ -87,7 +87,7 @@ export const addCourseDetails = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", "http://localhost:4000/api/v1/course/createCourse", data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/createCourse", data, {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     })
