@@ -137,7 +137,8 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:3000",
   "https://studynotion-4dre.vercel.app/",
-  "https://studynotion-4dre-5kxv8njuz-susmita-singhs-projects.vercel.app"
+  "https://studynotion-six-gules.vercel.app/"
+
 ];
 app.use(
   cors({
