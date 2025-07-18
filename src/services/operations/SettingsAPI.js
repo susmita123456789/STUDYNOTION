@@ -2,15 +2,15 @@ import { toast } from "react-hot-toast"
 
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
-import { settingsEndpoints } from "../apis"
+// import { settingsEndpoints } from "../apis"
 import { logout } from "./authAPI"
 
-const {
-  UPDATE_DISPLAY_PICTURE_API,
-  UPDATE_PROFILE_API,
-  CHANGE_PASSWORD_API,
-  DELETE_PROFILE_API,
-} = settingsEndpoints
+// const {
+//   UPDATE_DISPLAY_PICTURE_API,
+//   UPDATE_PROFILE_API,
+//   CHANGE_PASSWORD_API,
+//   DELETE_PROFILE_API,
+// } = settingsEndpoints
 
 export function updateDisplayPicture(token, formData) {
   return async (dispatch) => {
@@ -18,7 +18,7 @@ export function updateDisplayPicture(token, formData) {
     try {
       const response = await apiConnector(
         "PUT",
-        UPDATE_DISPLAY_PICTURE_API,
+        "https://studynotion-0cem.onrender.com/api/v1/profile/updatedisplayPicture",
         formData,
         {
           "Content-Type": "multipart/form-data",
@@ -47,7 +47,7 @@ export function updateProfile(token, formData) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     try {
-      const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
+      const response = await apiConnector("PUT", "https://studynotion-0cem.onrender.com/api/v1/profile/updateProfile", formData, {
         Authorization: `Bearer ${token}`,
       })
       console.log("UPDATE_PROFILE_API API RESPONSE............", response)
@@ -73,7 +73,7 @@ export function updateProfile(token, formData) {
 export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/changePassword", formData, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CHANGE_PASSWORD_API API RESPONSE............", response)
@@ -93,7 +93,7 @@ export function deleteProfile(token, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     try {
-      const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
+      const response = await apiConnector("DELETE", "https://studynotion-0cem.onrender.com/api/v1/profile/deleteProfile", null, {
         Authorization: `Bearer ${token}`,
       })
       console.log("DELETE_PROFILE_API API RESPONSE............", response)

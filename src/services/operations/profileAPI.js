@@ -2,17 +2,17 @@ import { toast } from "react-hot-toast"
 
 import { setLoading, setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
-import { profileEndpoints } from "../apis"
+// import { profileEndpoints } from "../apis"
 import { logout } from "./authAPI"
 
-const { GET_USER_DETAILS_API, GET_USER_ENROLLED_COURSES_API, GET_INSTRUCTOR_DATA_API } = profileEndpoints
+// const { GET_USER_DETAILS_API, GET_USER_ENROLLED_COURSES_API, GET_INSTRUCTOR_DATA_API } = profileEndpoints
 
 export function getUserDetails(token, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      const response = await apiConnector("GET", GET_USER_DETAILS_API, null, {
+      const response = await apiConnector("GET", "https://studynotion-0cem.onrender.com/api/v1/profile/getUserDetails", null, {
         Authorization: `Bearer ${token}`,
       })
       console.log("GET_USER_DETAILS API RESPONSE............", response)
@@ -41,7 +41,7 @@ export async function getUserEnrolledCourses(token) {
     console.log("BEFORE Calling BACKEND API FOR ENROLLED COURSES");
     const response = await apiConnector(
       "GET",
-      GET_USER_ENROLLED_COURSES_API,
+      "https://studynotion-0cem.onrender.com/api/v1/profile/getUserEnrolledCourses",
       null,
       {
         Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ export async function getInstructorData(token) {
   const toastId = toast.loading("Loading...");
   let result = [];
   try{ 
-    const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null, 
+    const response = await apiConnector("GET", "https://studynotion-0cem.onrender.com/api/v1/profile/getInstructorData", null, 
     {
       Authorization: `Bearer ${token}`,
     })

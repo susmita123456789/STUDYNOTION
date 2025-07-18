@@ -1,13 +1,13 @@
-import React from 'react'
+// import React from 'react'
 import {toast} from "react-hot-toast"
 import { apiConnector } from '../apiconnector';
-import { catalogData } from '../apis';
+// import { catalogData } from '../apis';
 
 export const getCatalogaPageData = async(categoryId) => {
   const toastId = toast.loading("Loading...");
   let result = [];
   try{
-        const response = await apiConnector("POST", catalogData.CATALOGPAGEDATA_API, 
+        const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/getCatalogaPageData", 
         {categoryId: categoryId,});
 
         if(!response?.data?.success)

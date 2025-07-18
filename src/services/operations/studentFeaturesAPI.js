@@ -129,14 +129,14 @@
 
 
 import { toast } from "react-hot-toast";
-import { studentEndpoints } from "../apis";
+// import { studentEndpoints } from "../apis";
 import { apiConnector } from "../apiconnector";
 import rzpLogo from "../../assets/Logo/rzp_logo.png"
 import { setPaymentLoading } from "../../slices/courseSlice";
 import { resetCart } from "../../slices/cartSlice";
 
 
-const {COURSE_PAYMENT_API, COURSE_VERIFY_API, SEND_PAYMENT_SUCCESS_EMAIL_API} = studentEndpoints;
+// const {COURSE_PAYMENT_API, COURSE_VERIFY_API, SEND_PAYMENT_SUCCESS_EMAIL_API} = studentEndpoints;
 
 function loadScript(src) {
     return new Promise((resolve) => {
@@ -166,7 +166,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
         }
 
         //initiate the order
-        const orderResponse = await apiConnector("POST", COURSE_PAYMENT_API, 
+        const orderResponse = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/payment/buyCourse", 
                                 {courses},
                                 {
                                     Authorization: `Bearer ${token}`,
@@ -214,7 +214,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
 
 async function sendPaymentSuccessEmail(response, amount, token) {
     try{
-        await apiConnector("POST", SEND_PAYMENT_SUCCESS_EMAIL_API, {
+        await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/payment/sendPaymentSuccessEmail", {
             orderId: response.razorpay_order_id,
             paymentId: response.razorpay_payment_id,
             amount,
@@ -232,7 +232,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
     const toastId = toast.loading("Verifying Payment....");
     dispatch(setPaymentLoading(true));
     try{
-        const response  = await apiConnector("POST", COURSE_VERIFY_API, bodyData, {
+        const response  = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/payment/verifyPayment", bodyData, {
             Authorization:`Bearer ${token}`,
         })
 

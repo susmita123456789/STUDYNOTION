@@ -3,26 +3,26 @@ import { toast } from "react-hot-toast"
 // import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiconnector"
-import { courseEndpoints } from "../apis"
+// import { courseEndpoints } from "../apis"
 
-const {
-  COURSE_DETAILS_API,
-  // COURSE_CATEGORIES_API,
-  // GET_ALL_COURSE_API,
-  // CREATE_COURSE_API,
-  EDIT_COURSE_API,
-  CREATE_SECTION_API,
-  // CREATE_SUBSECTION_API,
-  UPDATE_SECTION_API,
-  UPDATE_SUBSECTION_API,
-  DELETE_SECTION_API,
-  DELETE_SUBSECTION_API,
-  GET_ALL_INSTRUCTOR_COURSES_API,
-  DELETE_COURSE_API,
-  GET_FULL_COURSE_DETAILS_AUTHENTICATED,
-  CREATE_RATING_API,
-  LECTURE_COMPLETION_API,
-} = courseEndpoints
+// const {
+//   COURSE_DETAILS_API,
+//   // COURSE_CATEGORIES_API,
+//   // GET_ALL_COURSE_API,
+//   // CREATE_COURSE_API,
+//   EDIT_COURSE_API,
+//   CREATE_SECTION_API,
+//   // CREATE_SUBSECTION_API,
+//   UPDATE_SECTION_API,
+//   UPDATE_SUBSECTION_API,
+//   DELETE_SECTION_API,
+//   DELETE_SUBSECTION_API,
+//   GET_ALL_INSTRUCTOR_COURSES_API,
+//   DELETE_COURSE_API,
+//   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
+//   CREATE_RATING_API,
+//   LECTURE_COMPLETION_API,
+// } = courseEndpoints
 
 export const getAllCourses = async () => {
   const toastId = toast.loading("Loading...")
@@ -46,7 +46,7 @@ export const fetchCourseDetails = async (courseId) => {
   //   dispatch(setLoading(true));
   let result = null
   try {
-    const response = await apiConnector("POST", COURSE_DETAILS_API, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/fetchCourseDetails", {
       courseId,
     })
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
@@ -110,7 +110,7 @@ export const editCourseDetails = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", EDIT_COURSE_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/editCourse", data, {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     })
@@ -133,7 +133,7 @@ export const createSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", CREATE_SECTION_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/createSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CREATE SECTION API RESPONSE............", response)
@@ -155,7 +155,7 @@ export const createSubSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", "http://localhost:4000/api/v1/course/addSubSection", data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/addSubSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CREATE SUB-SECTION API RESPONSE............", response)
@@ -177,7 +177,7 @@ export const updateSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", UPDATE_SECTION_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/updateSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("UPDATE SECTION API RESPONSE............", response)
@@ -199,7 +199,7 @@ export const updateSubSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", UPDATE_SUBSECTION_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/updateSubSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("UPDATE SUB-SECTION API RESPONSE............", response)
@@ -221,7 +221,7 @@ export const deleteSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", DELETE_SECTION_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/deleteSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("DELETE SECTION API RESPONSE............", response)
@@ -242,7 +242,7 @@ export const deleteSubSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", DELETE_SUBSECTION_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/deleteSubSection", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("DELETE SUB-SECTION API RESPONSE............", response)
@@ -266,7 +266,7 @@ export const fetchInstructorCourses = async (token) => {
   try {
     const response = await apiConnector(
       "GET",
-      GET_ALL_INSTRUCTOR_COURSES_API,
+      "https://studynotion-0cem.onrender.com/api/v1/course/fetchInstructorCourses",
       null,
       {
         Authorization: `Bearer ${token}`,
@@ -289,7 +289,7 @@ export const fetchInstructorCourses = async (token) => {
 export const deleteCourse = async (data, token) => {
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("DELETE", DELETE_COURSE_API, data, {
+    const response = await apiConnector("DELETE", "https://studynotion-0cem.onrender.com/api/v1/course/deleteCourse", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("DELETE COURSE API RESPONSE............", response)
@@ -312,7 +312,7 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
   try {
     const response = await apiConnector(
       "POST",
-      GET_FULL_COURSE_DETAILS_AUTHENTICATED,
+      "https://studynotion-0cem.onrender.com/api/v1/course/getFullDetailsOfCourse",
       {
         courseId,
       },
@@ -342,7 +342,7 @@ export const markLectureAsComplete = async (data, token) => {
   console.log("mark complete data", data)
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", LECTURE_COMPLETION_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/markLectureAsComplete", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log(
@@ -369,7 +369,7 @@ export const createRating = async (data, token) => {
   const toastId = toast.loading("Loading...")
   let success = false
   try {
-    const response = await apiConnector("POST", CREATE_RATING_API, data, {
+    const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/course/createRating", data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("CREATE RATING API RESPONSE............", response)

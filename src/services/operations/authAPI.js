@@ -189,22 +189,22 @@ import { setLoading, setToken } from "../../slices/authSlice"
 import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
-import { endpoints } from "../apis"
+// import { endpoints } from "../apis"
 
-const {
-  SENDOTP_API,
-  SIGNUP_API,
-  LOGIN_API,
-  RESETPASSTOKEN_API,
-  RESETPASSWORD_API,
-} = endpoints
+// const {
+//   SENDOTP_API,
+//   SIGNUP_API,
+//   LOGIN_API,
+//   RESETPASSTOKEN_API,
+//   RESETPASSWORD_API,
+// } = endpoints
 
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      const response = await apiConnector("POST", SENDOTP_API, {
+      const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/sendOtp", {
         email,
         checkUserPresent: true,
       })
@@ -241,7 +241,7 @@ export function signUp(
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      const response = await apiConnector("POST", SIGNUP_API, {
+      const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/signUp", {
         accountType,
         firstName,
         lastName,
@@ -273,7 +273,7 @@ export function login(email, password, navigate) {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
-      const response = await apiConnector("POST", LOGIN_API, {
+      const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/login", {
         email,
         password,
       })
@@ -321,7 +321,7 @@ export function getPasswordResetToken(email , setEmailSent) {
   return async(dispatch) => {
     dispatch(setLoading(true));
     try{
-      const response = await apiConnector("POST", RESETPASSTOKEN_API, {email,})
+      const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/getPasswordResetToken", {email,})
 
       console.log("RESET PASSWORD TOKEN RESPONSE....", response);
 
@@ -344,7 +344,7 @@ export function resetPassword(password, confirmPassword, token) {
   return async(dispatch) => {
     dispatch(setLoading(true));
     try{
-      const response = await apiConnector("POST", RESETPASSWORD_API, {password, confirmPassword, token});
+      const response = await apiConnector("POST", "https://studynotion-0cem.onrender.com/api/v1/auth/resetPassword", {password, confirmPassword, token});
 
       console.log("RESET Password RESPONSE ... ", response);
 
