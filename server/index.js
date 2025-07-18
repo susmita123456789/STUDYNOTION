@@ -212,7 +212,8 @@ app.use(
 		origin: [
       // "https://study-notion-taupe-gamma.vercel.app", // your deployed frontend
       "http://localhost:3000", // (optional) for local dev
-      "https://studynotion-sv91.vercel.app"
+      "https://studynotion-sv91.vercel.app",
+      "https://studynotion-4dre.vercel.app/"
     ],
 		credentials:true,
 	})
