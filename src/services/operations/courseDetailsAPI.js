@@ -266,7 +266,7 @@ export const fetchInstructorCourses = async (token) => {
   try {
     const response = await apiConnector(
       "GET",
-      "https://studynotion-0cem.onrender.com/api/v1/course/fetchInstructorCourses",
+      "https://studynotion-0cem.onrender.com/api/v1/course/getInstructorCourses",
       null,
       {
         Authorization: `Bearer ${token}`,
