@@ -1,35 +1,42 @@
-<<<<<<< HEAD
-# STUDYNOTION
-=======
-# React & Tailwind CSS Starter Pack
+📚 Online Learning Platform
+An Online Learning Platform where Instructors can create and manage courses, and Students can explore, purchase, and learn from those courses.
+It includes a Catalog with categories, secure payments via Razorpay, and all media assets are hosted on Cloudinary.
 
-This is a starter pack for creating React projects with Tailwind CSS configured. It uses React version **18.2** and Tailwind CSS version **3.2**.
+✅ Tech Stack: Tailwind CSS · Node.js · Express.js · MongoDB · Cloudinary · Razorpay
 
-## Usage
+✨ Features
+👩‍🏫 Instructor Side
+Instructor Dashboard to create, edit, and manage courses.
 
-This starter pack includes a basic setup for using **Tailwind CSS with React**. To start building your own components and styles, follow these steps:
+Upload course content (videos, images, PDFs) to Cloudinary.
 
-1. Clone the repository to your local machine.
-    ```sh
-    git clone https://github.com/thepranaygupta/react-tailwind-css-starter-pack.git
-    ```
+Track course statistics and manage students enrolled.
 
-1. Install the required packages.
-    ```sh
-    cd react-tailwind-css-starter-pack
-    npm install
-    ```
+👨‍🎓 Student Side
+Student Dashboard to view enrolled courses and progress.
 
-1. Start the development server.
-    ```sh
-    npm start
-    ```
-1. Open the project in your browser at [`http://localhost:3000`](http://localhost:3000) to view your project.
-1. Create your React components and add your styles using Tailwind classes. You can also create new CSS files and import them into your components.
+Explore a Catalog of courses categorized by for enrolling in Courses.
 
-The project is set up to use `postcss-cli` to process your CSS files. You can add your own `tailwind.config.js` file to customize your Tailwind setup.
+Purchase courses securely via Razorpay payment gateway.
 
-## Contributing
+📦 Other Highlights
+🔐 Authentication & Authorization (Role-based: Instructor & Student)
 
-Contributions are welcome! If you have any suggestions or find any issues, please feel free to open an issue or a pull request.
->>>>>>> 5aab0efc (My Mega Project with brontend and backend)
+📂 Dynamic Catalog with Categories & Thumbnails
+
+☁️ Cloudinary Integration for media hosting
+
+💳 Razorpay Integration for payments
+
+🎨 Tailwind CSS for responsive UI
+
+⚡ REST APIs with Node.js & Express.js
+
+📡 MongoDB Database for storing users, courses, and transactions
+
+
+🛠️ Tech Stack
+Frontend	Backend	Cloud & Payment
+React.js with Tailwind CSS	Node.js & Express.js	Cloudinary (media), Razorpay (payment)
+Redux Toolkit (state)	MongoDB Atlas	JWT Auth
+
